@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/jobs/main",
+    "pages/message/main",
+    "pages/profile/main",
+    "pages/table/main",
+    "pages/match/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Copell 高配",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [{
+      "pagePath": "pages/jobs/main",
+      "text": "职位"
+    },
+      {
+      "pagePath": "pages/match/main",
+      "text": "匹配"
+    },
+      {
+        "pagePath": "pages/message/main",
+        "text": "消息"
+      },
+      {
+        "pagePath": "pages/profile/main",
+        "text": "我"
+      }
+    ]
+  }
+}
