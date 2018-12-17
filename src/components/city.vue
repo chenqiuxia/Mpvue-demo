@@ -3,7 +3,7 @@
       <ul class="letter-con" :animation="animation">
         <li v-for="(item,index) in citys" :key="index" @click="clickItem(index)">{{item.letter}}</li>
       </ul>
-      <div v-for="(item,index) in citys" :key="index" :class="`item${index}`">
+      <div v-for="(item,index) in citys" :key="index" :id='index'>
         <p>{{item.letter}}</p>
         <ul>
           <li v-for="(value, itemIndex) in item.list" :key="itemIndex">{{value}}</li>
@@ -27,7 +27,16 @@
       clickItem (index) {
         // let offset = this.citys[index].scrollOffset()
         // console.log(offset)
-        console.log(index)
+        // 创建节点选择器
+        let query = wx.createSelectorQuery()
+        query.select(`#${index}`).boundingClientRect()
+        query.selectViewport().scrollOffset()
+        query.exec(function (res) {
+          // res就是 所有标签为mjltest的元素的信息 的数组
+          console.log(res)
+          // 取高度
+          console.log(res[1].height)
+        })
       }
     },
     mounted () {
