@@ -1,6 +1,7 @@
 <template>
   <div class='container'>
     <h1 class="title">jobs list</h1>
+    <input placeholder="dce"/>
     <ul>
       <li v-for="item in list" :key="index" :id="item.id">
         <p>{{item.title}}</p>

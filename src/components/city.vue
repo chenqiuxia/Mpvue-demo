@@ -1,9 +1,9 @@
 <template>
-    <scroll-view class="area-container"  scroll-y>
-      <ul class="letter-con" :animation="animation">
-        <li v-for="(item,index) in citys" :key="index" @click="clickItem(index)">{{item.letter}}</li>
+    <scroll-view class="area-container"  scroll-y >
+      <ul class="letter-con">
+        <li v-for="(item,index) in citys" :key="index" @click="clickItem(index)" :class="{activeClass: activeIndex === index}">{{item.letter}}</li>
       </ul>
-      <div v-for="(item,index) in citys" :key="index" :id='index'>
+      <div v-for="(item,index) in citys" :key="index" class="city-item" @click="chooseCity(item)">
         <p>{{item.letter}}</p>
         <ul>
           <li v-for="(value, itemIndex) in item.list" :key="itemIndex">{{value}}</li>
@@ -19,28 +19,65 @@
     data () {
       return {
         show: false,
+        activeIndex: 0,
+        scrollNow: '',
         citys: cityList,
         animation: {}
       }
     },
     methods: {
       clickItem (index) {
-        // let offset = this.citys[index].scrollOffset()
-        // console.log(offset)
-        // 创建节点选择器
-        let query = wx.createSelectorQuery()
-        query.select(`#${index}`).boundingClientRect()
-        query.selectViewport().scrollOffset()
-        query.exec(function (res) {
-          // res就是 所有标签为mjltest的元素的信息 的数组
-          console.log(res)
-          // 取高度
-          console.log(res[1].height)
-        })
+        const that = this
+        that.activeIndex = index
+        wx.createSelectorQuery().selectAll('.city-item').fields({
+          dataset: true,
+          size: true,
+          rect: true
+        }, function (res) {
+          res.forEach(function (item, itemIndex) {
+            if (!item.top) {
+              console.log('这里是在顶部的时候')
+              console.log(item)
+            }
+            if (index === itemIndex) {
+              wx.pageScrollTo({
+                scrollTop: item.top + that.scrollNow,
+                duration: 400
+              })
+            }
+          })
+        }).exec()
+      },
+      chooseCity (item) {
+        console.log(item.letter)
       }
     },
+    onPageScroll (e) { // 获取滚动条当前位置
+      const that = this
+      that.scrollNow = e.scrollTop
+      wx.createSelectorQuery().selectAll('.city-item').scrollOffset({
+        // dataset: true,
+        scrollOffset: true,
+        context: true,
+        rect: true
+      }, function (res) {
+        res.forEach(function (item, itemIndex) {
+          console.log(item.top - that.scrollNow)
+          // if ( === 0) {
+          //   console.log('这里是在顶部的时候')
+          //   console.log(itemIndex + 'index')
+          //   console.log(item)
+          // }
+          // if (index === itemIndex) {
+          //   wx.pageScrollTo({
+          //     scrollTop: item.top + that.scrollNow,
+          //     duration: 400
+          //   })
+          // }
+        })
+      }).exec()
+    },
     mounted () {
-      console.log('sds')
       let animation = wx.createAnimation({
         transformOrigin: '50% 50%',
         duration: 1000,
@@ -62,8 +99,7 @@
     right: 0;
     top: 0;
   }
-  .hidden{
-    opacity: 0;
-
+  .activeClass{
+    color: red;
   }
 </style>
