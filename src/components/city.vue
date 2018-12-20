@@ -14,6 +14,7 @@
 
 <script>
   import cityList from '@/city'
+  // import util from '@/utils/index'
 
   export default {
     data () {
@@ -28,21 +29,17 @@
     methods: {
       clickItem (index) {
         const that = this
-        that.activeIndex = index
+        // that.activeIndex = index
         wx.createSelectorQuery().selectAll('.city-item').fields({
           dataset: true,
           size: true,
           rect: true
         }, function (res) {
           res.forEach(function (item, itemIndex) {
-            if (!item.top) {
-              console.log('这里是在顶部的时候')
-              console.log(item)
-            }
             if (index === itemIndex) {
               wx.pageScrollTo({
                 scrollTop: item.top + that.scrollNow,
-                duration: 400
+                duration: 500
               })
             }
           })
@@ -55,27 +52,16 @@
     onPageScroll (e) { // 获取滚动条当前位置
       const that = this
       that.scrollNow = e.scrollTop
-      wx.createSelectorQuery().selectAll('.city-item').scrollOffset({
-        // dataset: true,
-        scrollOffset: true,
-        context: true,
-        rect: true
-      }, function (res) {
-        res.forEach(function (item, itemIndex) {
-          console.log(item.top - that.scrollNow)
-          // if ( === 0) {
-          //   console.log('这里是在顶部的时候')
-          //   console.log(itemIndex + 'index')
-          //   console.log(item)
-          // }
-          // if (index === itemIndex) {
-          //   wx.pageScrollTo({
-          //     scrollTop: item.top + that.scrollNow,
-          //     duration: 400
-          //   })
-          // }
-        })
-      }).exec()
+      wx.createSelectorQuery().selectAll('.city-item')
+        .boundingClientRect((rects) => {
+          let index = rects.findIndex((item) => {
+            return item.top >= 0
+          })
+          if (index === -1) {
+            index = rects.length - 1
+          }
+          that.activeIndex = (index)
+        }).exec()
     },
     mounted () {
       let animation = wx.createAnimation({

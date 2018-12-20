@@ -17,8 +17,20 @@ export function formatTime (date) {
 
   return `${t1} ${t2}`
 }
+// 节流
+const throttle = function (fn, delay) {
+  let lastTime = 0
+  return function () {
+    let nowTime = Date.now()
+    if (nowTime - lastTime > delay || !lastTime) {
+      fn.apply(this, arguments)
+      lastTime = nowTime
+    }
+  }
+}
 
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  throttle
 }
