@@ -1,16 +1,15 @@
 <template>
   <div class='container'>
     <h1 class="title">jobs list</h1>
-    <input placeholder="dce"/>
-    <ul>
-      <li v-for="item in list" :key="index" :id="item.id">
-        <p>{{item.title}}</p>
-        <div class="image-container">
-        <img src="item.image" alt="image">
-        </div>
-        <span>{{item.address}}</span>
-      </li>
-    </ul>
+    <!--<ul>-->
+      <!--<li v-for="item in list" :key="index" :id="item.id">-->
+        <!--<p>{{item.title}}</p>-->
+        <!--<div class="image-container">-->
+        <!--<img src="item.image" alt="image">-->
+        <!--</div>-->
+        <!--<span>{{item.address}}</span>-->
+      <!--</li>-->
+    <!--</ul>-->
     <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
     <!-- 需要使用 button 来授权登录 -->
     <!--<button @click='getUserInfo'>授权登录</button>-->

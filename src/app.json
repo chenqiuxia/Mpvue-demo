@@ -3,7 +3,6 @@
     "pages/jobs/main",
     "pages/message/main",
     "pages/profile/main",
-    "pages/table/main",
     "pages/match/main"
   ],
   "window": {
