@@ -13,7 +13,7 @@
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
 	"appid": "wxf590fa861077b71b",
-	"projectname": "mpvue-quickstart",
+	"projectname": "copell",
 	"condition": {
 		"search": {
 			"current": -1,

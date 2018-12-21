@@ -1,5 +1,5 @@
 <template>
-    <scroll-view class="area-container"  scroll-y >
+    <scroll-view class="area-container"  scroll-y="true" >
       <ul class="letter-con">
         <li v-for="(item,index) in citys" :key="index" @click="clickItem(index)" :class="{activeClass: activeIndex === index}">{{item.letter}}</li>
       </ul>
